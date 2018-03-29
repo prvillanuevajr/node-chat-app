@@ -20,20 +20,27 @@ server.listen(port,() => {
 });
 
 io.on('connection',(socket) => {
-  console.log('New user connected');
+  socket.emit('greetings',{
+    message: 'Welcome to chat room',
+  });
+
+  socket.broadcast.emit('NewUserJoined',{
+    message: 'New user joined'
+  });
 
   socket.on('disconnect',() => {
   console.log('User was disconnected');
-  });
-
-  socket.emit('newMessage', {
-    to: 'sha@example.com',
-    from: 'pres@email.com',
-    message: 'pangolier@example.com',
+    socket.broadcast.emit('NewUserJoined',{
+      message: 'A user was disconnected'
+    });
   });
 
   socket.on('createMessage',(newMessage) => {
-    console.log(newMessage);
+    io.emit('newMessage',{
+      from : newMessage.from,
+      message : newMessage.message,
+      createdAt: new Date().getTime(),
+    });
   })
 
 

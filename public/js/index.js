@@ -8,12 +8,14 @@ socket.on('disconnect', function ()  {
   console.log('Disconnected');
 });
 
-socket.on('newMessage',function (email) {
-  console.log(email);
+socket.on('newMessage',function (newMessage) {
+  console.log(newMessage);
 });
 
-socket.emit('createMessage', {
-  from: 'sha@example.com',
-  to: 'pres@email.com',
-  message: 'pangolier@example.com',
+socket.on('greetings',function (message) {
+  console.log(message);
+});
+
+socket.on('NewUserJoined',function (message) {
+  console.log(message);
 });
