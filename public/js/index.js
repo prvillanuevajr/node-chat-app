@@ -9,13 +9,27 @@ socket.on('disconnect', function ()  {
 });
 
 socket.on('newMessage',function (newMessage) {
-  console.log(newMessage);
+  var li = $('<li></li>');
+  li.text(`${newMessage.from}: ${newMessage.text}`);
+  $('#messages').append(li);
 });
 
 socket.on('greetings',function (message) {
   console.log(message);
 });
 
-socket.on('NewUserJoined',function (message) {
+socket.on('newUserJoined',function (message) {
   console.log(message);
 });
+socket.on('userDisconnected',function (message) {
+  console.log(message);
+});
+
+$('#form').on('submit', function (e) {
+  e.preventDefault();
+  socket.emit('createMessage',{
+    text: $('#messageInput').val(),
+    from: "user",
+  }, function(mes){
+  });
+})

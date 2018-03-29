@@ -3,6 +3,7 @@ const http = require('http');
 const express = require('express');
 const socketIO = require('socket.io');
 
+const {generateMessage} = require('./utils/message');
 const publicPath = path.join(__dirname + '/../public');
 const port = process.env.PORT || 3000;
 const app = express();
@@ -20,28 +21,18 @@ server.listen(port,() => {
 });
 
 io.on('connection',(socket) => {
-  socket.emit('greetings',{
-    message: 'Welcome to chat room',
-  });
+  socket.emit('greetings',generateMessage('Admin','Welcome to the chat room'));
 
-  socket.broadcast.emit('NewUserJoined',{
-    message: 'New user joined'
-  });
+  socket.broadcast.emit('newUserJoined',generateMessage('Admin','New user joined the chat room'));
 
   socket.on('disconnect',() => {
   console.log('User was disconnected');
-    socket.broadcast.emit('NewUserJoined',{
-      message: 'A user was disconnected'
-    });
+    socket.broadcast.emit('userDisconnected',generateMessage('Admin','A user was disconnected'));
   });
 
   socket.on('createMessage',(newMessage) => {
-    io.emit('newMessage',{
-      from : newMessage.from,
-      message : newMessage.message,
-      createdAt: new Date().getTime(),
-    });
-  })
+    io.emit('newMessage',generateMessage(newMessage.from,newMessage.text));
+  });
 
 
 });
