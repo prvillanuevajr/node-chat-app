@@ -15,7 +15,7 @@ app.get('/',(req,res) => {
 });
 
 io.on('connect',(socket) => {
-  socket.emit('welcomegreet',generateMessage('admin','Welcome to chat room'));
+  socket.emit('welcomegreet',generateMessage('Chat roomxx','Welcome to chat room'));
 
   socket.on('newMessage',(message) => {
     io.emit('thenewmessage',generateMessage(message.from,message.text));

@@ -15,7 +15,7 @@ socket.on('thenewmessage',function (message) {
 $('#send').click(function(){
   if ($('#messageInput') != '') {
     socket.emit('newMessage',{
-      from: 'user',
+      from: 'x',
       text: $('#messageInput').val()
     });
   }
