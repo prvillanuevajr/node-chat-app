@@ -1,11 +1,11 @@
-var generateMessage = (from,text) => {
+
+var generateMessage = (from, text) => {
   return {
-    from: from,
-    text: text,
-    createdAt: new Date().getTime(),
+    from : from,
+    text : text,
   }
 }
 
-module.exports = {
+module.exports =  {
   generateMessage
 }
